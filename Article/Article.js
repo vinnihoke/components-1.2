@@ -71,6 +71,22 @@ const data = [
         Castform Lotad the power that's inside Burnt Berry Makuhita. Ghost Ariados Corphish Dusclops Golbat Gligar Zweilous.`
   },
   {
+    title: 'Not-so Professional Software Development in 2019',
+    date: 'Jan 1st, 2019',
+    firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
+          hodor. Hodor, hodor. Hodor. Hodor, hodor - hodor... Hodor hodor hodor; hodor HODOR hodor, hodor hodor?! Hodor hodor, hodor.
+          Hodor hodor hodor hodor hodor! Hodor hodor - HODOR hodor, hodor hodor hodor hodor hodor; hodor hodor? `,
+
+    secondParagraph: `Hodor, hodor. Hodor. Hodor, hodor, hodor. Hodor hodor, hodor. Hodor hodor, hodor, hodor hodor. Hodor! Hodor hodor, hodor;
+          hodor hodor hodor? Hodor, hodor. Hodor. Hodor, hodor - HODOR hodor, hodor hodor hodor! Hodor, hodor. Hodor. Hodor, HODOR
+          hodor, hodor hodor, hodor, hodor hodor. Hodor hodor - hodor - hodor... Hodor hodor hodor hodor hodor hodor hodor?! Hodor
+          hodor - hodor hodor hodor. Hodor. Hodor hodor... Hodor hodor hodor hodor hodor? `,
+
+    thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
+          Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
+          Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
     title: 'Professional Software Development in 2019',
     date: 'Jan 1st, 2019',
     firstParagraph: `Hodor hodor HODOR! Hodor hodor - hodor, hodor. Hodor hodor... Hodor hodor hodor; hodor hodor. Hodor hodor hodor, hodor, hodor
@@ -113,47 +129,49 @@ const data = [
 
 */
 
-class Article {
-  constructor(article, title, date, firstParagraph, secondParagraph, thirdParagraph){
-    const title = 
-  }
-}
-
-const createNewArticle = () => {
+const createNewArticle = (data) => {
   const articles = document.querySelector('.articles');
+
+  // Create a newArticle
   const newArticle = document.createElement('div');
   newArticle.classList.add('article');
 
+  // Create Title add to Article
   const title = document.createElement('h2');
+  title.textContent = data.title;
   newArticle.appendChild(title);
 
+  // Create Date add to Article
   const date = document.createElement('p');
   date.classList.add('date');
+  date.textContent = data.date;
   newArticle.appendChild(date);
 
-  const content = document.createElement('p');
-  newArticle.appendChild(content);
-  newArticle.appendChild(content);
-  newArticle.appendChild(content);
+  for(const item of ['first', 'second', 'third']){
+    const content = document.createElement('p');
+    content.textContent = data[`${item}Paragraph`];
+    newArticle.appendChild(content);
+  }
   
+  // Create a button that expands content
   const button = document.createElement('span');
+  button.textContent = 'Open'
   button.classList.add('expandButton');
+  button.addEventListener('click', (e) => {
+    newArticle.classList.toggle('article-open');    
+  })
+
   newArticle.appendChild(button);
 
+  // Add the newArticle to the articles
   articles.appendChild(newArticle);
   return newArticle;
 }
 
-let articles = document.querySelectorAll('.article');
+const articles = data.map(article => createNewArticle(article));
+const [ articleContainer ] = document.getElementsByClassName('articles');
 
-articles.map((data) => {
-  const Article = new Article(
-    createNewArticle(),
-    data.title,
-    data.date,
-    data.firstParagraph,
-    data.secondParagraph,
-    data.thirdParagraph,
-  );
-})
+articles.forEach(article => {
+  articleContainer.appendChild(article);
+});
 
